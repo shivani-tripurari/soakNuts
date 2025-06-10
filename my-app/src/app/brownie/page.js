@@ -27,7 +27,7 @@ const Brownie = () => {
                 />
             <h1 className="text-3xl font-bold">Brownie points : {points} ✨ </h1>
             <Link href="https://buymeacoffee.com/shivaniiii">
-                <p className="text-base font-light underline mt-1">Show these points to steam momo to reedem exciting prices</p>
+                <p className="text-base font-light p-4 text-center underline mt-1">Show these points to steam momo to reedem exciting prices</p>
             </Link>
         </div>
     )

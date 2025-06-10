@@ -63,7 +63,7 @@ const Timer = () => {
                 className=" mb-4 w-[60vw] h-[60vh]"
             />
             <h1 className="text-4xl font-bold ">{formatTime(timeLeft)}</h1>
-             <p className="mt-6 text-white/70 text-base font-light">Soaking will take max 3 mins of your day, click on Start when you are ready</p>
+             <p className="mt-6 text-white/70 p-4 text-center text-base font-light">Soaking will take max 3 mins of your day, click on Start when you are ready</p>
             <button 
                 onClick={handleToggle}
                 className="mt-6 bg-amber-50 rounded-full py-4 px-2 w-32 text-background font-bold cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 shadow-md hover:shadow-lg"
