@@ -14,10 +14,11 @@ export default function Home() {
         playsInline
         className=" mb-4 w-[70vw] h-[70vh]"
       />
+      <h1 className="text-4xl font-bold ">Daily dose of soaking</h1>
       <Link href="/timer">
         <button
           onClick={()=>console.log("soak time initiated")}
-          className="bg-amber-50 rounded-full p-4 text-background font-bold cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 shadow-md hover:shadow-lg"
+          className="bg-amber-50 rounded-full p-4 mt-6 text-background font-bold cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 shadow-md hover:shadow-lg"
         >
           Soak Time 💦
         </button>
