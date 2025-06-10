@@ -1,10 +1,18 @@
 "use client";
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Link from "next/link";
 
 const Brownie = () => {
 
-    const points = localStorage.getItem("browniePoints");
+    const [points, setPoints] = useState(0);
+
+    useEffect(()=>{
+        const storedPoints = localStorage.getItem("browniePoints");
+        setPoints(storedPoints || 0);
+    }, [])
+
+
+    // const points = localStorage.getItem("browniePoints");
     console.log("brownie points ", points);
 
     return(
