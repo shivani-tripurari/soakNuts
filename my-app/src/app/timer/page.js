@@ -4,6 +4,8 @@ import Link from "next/link";
 
 const Timer = () => {
 
+    const now = new Date().getTime();
+    // console.log(now.toString(),",", Date.now());
     const [isRunning, setIsRunning] = useState(false);
     const [timeLeft, setTimeLeft] = useState(3*60);
 
@@ -39,16 +41,59 @@ const Timer = () => {
         return () => clearInterval(intervalRef.current);
     } , [isRunning]);
 
-    //for toggling buttons + maintaining brownie points
+    //only runs on mount, deduction of brownie points
+    useEffect(()=>{
+        //time when start is clicked
+        const now = Date.now();
+        //time when start was clicked last time
+        const lastStartTimeStamp = parseInt(localStorage.getItem("lastStart")||0, 10);
+        //time when brownie points were last deducted
+        const lastDeductedTimeStamp = parseInt(localStorage.getItem("lastDeductedAt")||0, 10); 
+        console.log("time-stamps", lastStartTimeStamp, now, lastDeductedTimeStamp);
+
+        const TWENTY_FOUR_HOURS = 24*60*60*1000;
+        // const TWENTY_FOUR_HOURS = 10*1000; ---> testing
+
+        const hasbeenTime = now - lastStartTimeStamp > TWENTY_FOUR_HOURS;
+        const hasbeenDeducted = now - lastDeductedTimeStamp < TWENTY_FOUR_HOURS;
+        
+        //deduction of browniePoints if interval is more than 24hrs
+        if(hasbeenTime && !hasbeenDeducted){
+            const prevPoints = parseInt(localStorage.getItem("browniePoints")) || 0;
+            const newPoints = Math.max(prevPoints-1, 0);
+            localStorage.setItem("browniePoints", newPoints.toString());
+            localStorage.setItem("lastDeductedAt", now.toString());
+
+            console.log("BrowniePoints deducted ", newPoints);
+        }else{
+            console.log("no deduction");
+        }
+    }, []);
+
+    //for toggling buttons + maintaining brownie points + tracking last clicked
     const handleToggle = () => {
         if(isRunning){
             setIsRunning(false);
         }else{
+            //time now
+            const now = Date.now();
+            //timer
             setTimeLeft(3 * 60);
             setIsRunning(true);
-            //brownie points
+            //increment brownie points
             const prevPoints = parseInt(localStorage.getItem("browniePoints")) || 0 ;
             localStorage.setItem("browniePoints", prevPoints + 1);
+
+            //lastStart timestamp
+            localStorage.setItem("lastStart", now.toString());
+
+            //lastDeducted timestamp
+            localStorage.setItem("lastDeductedAt", 0);
+
+            const lastStartAtTimeStamp = localStorage.getItem("lastStart");
+            const lastDeductedAtTimeStamp = localStorage.getItem("lastDeductedAt");
+            console.log("local ", prevPoints,lastStartAtTimeStamp,lastDeductedAtTimeStamp );
+
         }
     }
 
@@ -98,4 +143,22 @@ export default Timer;
 /**
  * a timer ---> 
  * runs for 3 mins on clicking start and stops on clicking stop button
+ * when start is clicked ---> 1 brownie point
+ * when start is not clicked in 24 hrs of clicking the previous start button, ---> -1 brownie point
+ * we calculate now - lastStart to check if the time interval crossed 24hrs
+ */
+
+/**
+ * The jsx part --->
+ * A gif
+ * A header 
+ * A timer countdown
+ * A button - toggles b/w start and stop
+ * A checkbox
+ */
+
+/**
+ * localstorage --->
+ * browniePoints - whenever user clicks Start button
+ * lastStart - to track when Start button was clikcked last time
  */
